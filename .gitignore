@@ -1,0 +1,8 @@
+﻿.idea
+obj
+bin
+appsettings.Development.json
+appsettings.json
+launchSettings.json
+*.DotSettings
+*.DotSettings.user
