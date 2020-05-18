@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace RiotApiClient.Tests
+namespace RiotApiClient.IntegrationTests
 {
     public class RiotApiClientFixture
     {

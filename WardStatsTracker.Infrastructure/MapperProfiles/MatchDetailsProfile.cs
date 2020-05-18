@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using RiotApiClient.Models;
-using WardStatsTrackerApi.Core.Models;
+using WardStatsTracker.Core.Models;
 
-namespace WardStatsTrackerApi.Core.Profiles
+namespace WardStatsTracker.Infrastructure.MapperProfiles
 {
     public class MatchDetailsProfile : Profile
     {

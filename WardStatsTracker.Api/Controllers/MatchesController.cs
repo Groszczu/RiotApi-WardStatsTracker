@@ -2,12 +2,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RiotApiClient;
-using WardStatsTrackerApi.Core.Models;
+using WardStatsTracker.Core.Models;
+using WardStatsTracker.Infrastructure.MapperProfiles;
 
-namespace WardStatsTrackerApi.Api
+namespace WardStatsTracker.Api.Controllers
 {
     [ResponseCache(Duration = 120)]
-    [Route("{platformMoniker}/[controller]")]
+    [Route("{platformId}/[controller]")]
     [ApiController]
     public class MatchesController : ControllerBase
     {
@@ -21,11 +22,11 @@ namespace WardStatsTrackerApi.Api
         }
 
         [HttpGet("by-account/{accountId}")]
-        public async Task<ActionResult<MatchListModel>> GetMatchHistoryByAccount(string platformMoniker,
+        public async Task<ActionResult<MatchListModel>> GetMatchHistoryByAccount(string platformId,
             string accountId, [FromQuery] int count = 10)
         {
-            var client = _riotApiClientFactory.CreateClient(platformMoniker);
-            var matchList = await client.GetMatchList(accountId);
+            var client = _riotApiClientFactory.CreateClient(platformId);
+            var matchList = await client.GetMatchList(accountId, endIndex: count);
 
             var matchListModel = _mapper.Map<MatchListModel>(matchList);
 
@@ -33,9 +34,9 @@ namespace WardStatsTrackerApi.Api
         }
 
         [HttpGet("{matchId}")]
-        public async Task<ActionResult<MatchDetailsModel>> GetMatchDetails(string platformMoniker, long matchId)
+        public async Task<ActionResult<MatchDetailsModel>> GetMatchDetails(string platformId, long matchId)
         {
-            var client = _riotApiClientFactory.CreateClient(platformMoniker);
+            var client = _riotApiClientFactory.CreateClient(platformId);
             var match = await client.GetMatch(matchId);
 
             var matchModel = _mapper.Map<MatchDetailsModel>(match);

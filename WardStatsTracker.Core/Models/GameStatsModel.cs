@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WardStatsTrackerApi.Core.Models
+namespace WardStatsTracker.Core.Models
 {
     public class GameStatsModel
     {

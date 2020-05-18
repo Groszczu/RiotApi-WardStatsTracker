@@ -2,12 +2,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RiotApiClient;
-using WardStatsTrackerApi.Core.Models;
+using WardStatsTracker.Core.Models;
 
-namespace WardStatsTrackerApi.Api
+namespace WardStatsTracker.Api.Controllers
 {
     [ResponseCache(Duration = 300)]
-    [Route("{platformMoniker}/[controller]")]
+    [Route("{platformId}/[controller]")]
     [ApiController]
     public class SummonersController : ControllerBase
     {
@@ -21,9 +21,9 @@ namespace WardStatsTrackerApi.Api
         }
 
         [HttpGet("{summonerName}")]
-        public async Task<ActionResult<SummonerModel>> GetSummonerByName(string platformMoniker, string summonerName)
+        public async Task<ActionResult<SummonerModel>> GetSummonerByName(string platformId, string summonerName)
         {
-            var client = _riotApiClientFactory.CreateClient(platformMoniker);
+            var client = _riotApiClientFactory.CreateClient(platformId);
             var summoner = await client.GetSummoner(summonerName);
 
             var summonerModel = _mapper.Map<SummonerModel>(summoner);

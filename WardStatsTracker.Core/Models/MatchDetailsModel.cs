@@ -1,4 +1,4 @@
-namespace WardStatsTrackerApi.Core.Models
+namespace WardStatsTracker.Core.Models
 {
     public class MatchDetailsModel
     {

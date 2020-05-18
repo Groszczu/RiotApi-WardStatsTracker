@@ -5,8 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RiotApiClient;
+using RiotApiClient.Extensions;
+using WardStatsTracker.Api.Middleware;
 
-namespace WardStatsTrackerApi
+namespace WardStatsTracker.Api
 {
     public class Startup
     {
@@ -20,10 +22,9 @@ namespace WardStatsTrackerApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(Infrastructure.MapperProfiles.SummonerProfile));
 
-            services.AddSingleton<IRiotApiClientFactory>(sp =>
-                new RiotApiClientFactory(Configuration["RiotApi:ApiKey"]));
+            services.AddRiotApiClientFactory(Configuration["RiotApi:ApiKey"]);
 
             services.AddControllers(c => c.EnableEndpointRouting = false);
         }
@@ -31,7 +32,8 @@ namespace WardStatsTrackerApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            //if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            /*else*/ app.UseJsonResponseExceptionHandler();
 
             app.UseMvc();
         }

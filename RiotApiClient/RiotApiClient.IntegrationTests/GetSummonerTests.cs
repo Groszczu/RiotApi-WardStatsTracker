@@ -3,7 +3,7 @@ using Refit;
 using RiotApiClient.Models;
 using Xunit;
 
-namespace RiotApiClient.Tests
+namespace RiotApiClient.IntegrationTests
 {
     public class GetSummonerShould : IClassFixture<RiotApiClientFixture>
     {
