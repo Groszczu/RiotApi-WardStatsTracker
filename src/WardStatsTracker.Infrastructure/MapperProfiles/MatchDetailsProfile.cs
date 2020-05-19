@@ -10,7 +10,7 @@ namespace WardStatsTracker.Infrastructure.MapperProfiles
         {
             CreateMap<MatchDetails, MatchDetailsModel>();
             CreateMap<GameParticipant, GameParticipantModel>();
-            CreateMap<GameStats, GameStatsModel>();
+            CreateMap<ParticipantStats, ParticipantStatsModel>();
         }
     }
 }

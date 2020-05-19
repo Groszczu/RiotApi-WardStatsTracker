@@ -6,6 +6,6 @@ namespace WardStatsTracker.Core.Models
         public int ChampionId { get; set; }
         public int Spell1Id { get; set; }
         public int Spell2Id { get; set; }
-        public GameStatsModel? Stats { get; set; }
+        public ParticipantStatsModel? Stats { get; set; }
     }
 }

@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace WardStatsTracker.Core.Models
 {
-    public class GameStatsModel
+    public class ParticipantStatsModel
     {
         public bool Win { get; set; }
         public int Kills { get; set; }
