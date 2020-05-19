@@ -11,8 +11,8 @@ namespace WardStatsTracker.Api.Controllers
     [ApiController]
     public class SummonersController : ControllerBase
     {
-        private readonly IRiotApiClientFactory _riotApiClientFactory;
         private readonly IMapper _mapper;
+        private readonly IRiotApiClientFactory _riotApiClientFactory;
 
         public SummonersController(IRiotApiClientFactory riotApiClientFactory, IMapper mapper)
         {

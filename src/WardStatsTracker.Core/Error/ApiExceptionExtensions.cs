@@ -12,7 +12,7 @@ namespace WardStatsTracker.Core.Error
                 error = new
                 {
                     message = exception.Message,
-                    statusCode = (int)exception.StatusCode
+                    statusCode = (int) exception.StatusCode
                 }
             });
         }

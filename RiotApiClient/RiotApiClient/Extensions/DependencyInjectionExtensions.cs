@@ -11,6 +11,5 @@ namespace RiotApiClient.Extensions
 
             return services;
         }
-        
     }
 }

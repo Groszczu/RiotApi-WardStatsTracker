@@ -2,13 +2,13 @@
 {
     public class PlatformId
     {
-        public string Value { get; private set; }
-
         private PlatformId(string value)
         {
             Value = value;
         }
-        
+
+        public string Value { get; }
+
         public static PlatformId EuropeNordic => new PlatformId("eun1");
         public static PlatformId EuropeWest => new PlatformId("euw1");
         public static PlatformId Brazil => new PlatformId("br1");

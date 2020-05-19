@@ -9,7 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RiotApiClient\RiotApiClient\RiotApiClient.csproj" />
+      <ProjectReference Include="..\..\RiotApiClient\RiotApiClient\RiotApiClient.csproj" />
       <ProjectReference Include="..\WardStatsTracker.Core\WardStatsTracker.Core.csproj" />
     </ItemGroup>
 

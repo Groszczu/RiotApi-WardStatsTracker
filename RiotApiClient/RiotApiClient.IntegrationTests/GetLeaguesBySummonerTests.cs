@@ -5,9 +5,9 @@ using Xunit;
 
 namespace RiotApiClient.IntegrationTests
 {
-    public class GetMatchListShould : IClassFixture<RiotApiClientFixture>
+    public class GetLeaguesBySummonerShould : IClassFixture<RiotApiClientFixture>
     {
-        public GetMatchListShould(RiotApiClientFixture riotApiClientFixture)
+        public GetLeaguesBySummonerShould(RiotApiClientFixture riotApiClientFixture)
         {
             _riotApiClientFixture = riotApiClientFixture;
         }
@@ -15,22 +15,20 @@ namespace RiotApiClient.IntegrationTests
         private readonly RiotApiClientFixture _riotApiClientFixture;
 
         [Fact]
-        public async Task ReturnMatchList()
+        public async Task ReturnLeaguesArray()
         {
             var client = _riotApiClientFixture.EuropeNordicRiotApiClient;
 
-            var match = await client.GetMatchList("YIDGOiVNVk13syOzWymCbEmWhkJaXA90Qdm_OLithz31yw");
+            var leagues = await client.GetLeaguesBySummoner("12H6BKorGqmL9_B2n0w6ee2YTWcbBZMZWek0-EKueJ_mqWg");
 
-            Assert.IsType<MatchList>(match);
-            Assert.IsType<MatchOverview[]>(match.Matches);
-            Assert.Equal("EUN1", match.Matches?[0].PlatformId);
+            Assert.IsType<LeagueEntry[]>(leagues);
         }
 
         [Fact]
         public async Task ThrowApiExceptionOnInvalidMatchId()
         {
             var client = _riotApiClientFixture.EuropeNordicRiotApiClient;
-            await Assert.ThrowsAsync<ApiException>(() => client.GetMatchList(""));
+            await Assert.ThrowsAsync<ApiException>(() => client.GetLeaguesBySummoner(""));
         }
     }
 }

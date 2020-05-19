@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RiotApiClient\RiotApiClient\RiotApiClient.csproj" />
+      <ProjectReference Include="..\..\RiotApiClient\RiotApiClient\RiotApiClient.csproj" />
       <ProjectReference Include="..\WardStatsTracker.Core\WardStatsTracker.Core.csproj" />
       <ProjectReference Include="..\WardStatsTracker.Infrastructure\WardStatsTracker.Infrastructure.csproj" />
     </ItemGroup>

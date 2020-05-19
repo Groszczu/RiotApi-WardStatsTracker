@@ -4,12 +4,11 @@ using WardStatsTracker.Core.Models;
 
 namespace WardStatsTracker.Infrastructure.MapperProfiles
 {
-    public class SummonerProfile : Profile
+    public class LeagueEntryProfile : Profile
     {
-        public SummonerProfile()
+        public LeagueEntryProfile()
         {
-            CreateMap<Summoner, SummonerModel>();
+            CreateMap<LeagueEntry, LeagueEntryModel>();
         }
-        
     }
 }

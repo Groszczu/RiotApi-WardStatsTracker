@@ -3,7 +3,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RiotApiClient;
 using WardStatsTracker.Core.Models;
-using WardStatsTracker.Infrastructure.MapperProfiles;
 
 namespace WardStatsTracker.Api.Controllers
 {

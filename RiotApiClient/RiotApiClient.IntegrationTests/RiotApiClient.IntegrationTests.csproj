@@ -4,9 +4,8 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
 
         <IsPackable>false</IsPackable>
-
-        <RootNamespace>RiotApiClient.Tests</RootNamespace>
         <UserSecretsId>8da5546b-b393-4c00-aeee-e432681604ba</UserSecretsId>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,7 +13,7 @@
         <PackageReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
         <PackageReference Include="Refit" Version="5.1.67" />
-        <PackageReference Include="xunit" Version="2.4.0" />
+        <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
         <PackageReference Include="coverlet.collector" Version="1.2.0" />
     </ItemGroup>

@@ -29,7 +29,7 @@ namespace WardStatsTracker.Api.Middleware
         private static async Task HandleStatusCodeException(HttpContext context, ApiException ex)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)ex.StatusCode;
+            context.Response.StatusCode = (int) ex.StatusCode;
 
             await context.Response.WriteAsync(ex.ToJson());
         }
