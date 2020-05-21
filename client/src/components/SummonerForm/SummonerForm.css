@@ -1,0 +1,63 @@
+@import "../../variables.css";
+
+.summoner-search {
+  justify-self: center;
+  margin: 0 auto;
+  width: 80%;
+  --edges-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-btn,
+.platform-dropdown,
+.summoner-name-input {
+  font-size: 1rem;
+  padding: 0.1em 0.8em;
+  border: 1px solid var(--border-clr);
+  height: 2.25em;
+}
+
+.search-icon {
+  padding: 0.1em 0em;
+  max-height: 100%;
+  height: 1.2em;
+  width: auto;
+
+  filter: invert(100%);
+}
+
+.platform-dropdown, 
+.submit-btn {
+  color: var(--text-clr);
+  background-color: var(--accent-clr);
+  cursor: pointer;
+  transition: background-color 0.1s ease-in;  
+}
+
+.submit-btn {
+  border-radius: 0 var(--edges-radius) var(--edges-radius) 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+
+.platform-dropdown {
+  border-radius: var(--edges-radius) 0 0 var(--edges-radius);
+  max-width: 150px;
+  width: 20%;
+}
+
+.submit-btn:focus,
+.submit-btn:hover,
+.platform-dropdown:focus,
+.platform-dropdown:hover {
+  background-color: var(--selected-clr);
+}
+
+.link-disabled {
+  pointer-events: none;
+  filter: brightness(0.5);
+}

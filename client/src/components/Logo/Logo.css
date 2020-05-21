@@ -1,0 +1,10 @@
+.logo {
+  text-decoration: none;
+  color: var(--text-clr);
+  transition: color 1s;
+  z-index: 2;
+}
+
+.logo:hover {
+  color: var(--contrast-clr);
+}

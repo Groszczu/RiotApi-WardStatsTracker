@@ -1,0 +1,23 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0 auto;
+  text-align: center;
+  color: var(--text-clr);
+  background-color: var(--bg-clr);
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+em {
+  font-style: normal;
+  font-weight: 600;
+}

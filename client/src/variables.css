@@ -1,0 +1,14 @@
+html {
+  --bg-clr: #17172e;
+  --text-clr: #ffffff;
+  --dark-text-clr: #363636;
+  --accent-clr: #28283e;
+  --contrast-clr: #00c9db;
+  --border-clr: #7372B2;
+  --selected-clr: #4A5071;
+  --victory-card-bg-clr: rgba(157, 155, 255, 0.7);
+  --victory-card-text-clr: rgb(25, 23, 138); 
+  --defeat-card-bg-clr: rgba(187, 83, 83, 0.8);
+  --defeat-card-text-clr: rgb(85, 1, 1);
+  --death-text-clr: rgb(31, 0, 0);
+}

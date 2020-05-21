@@ -1,0 +1,12 @@
+.game-stats {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.deaths-number {
+  color: var(--death-text-clr);
+}
+
+.stats-kda {
+  color: var(--contrast-clr);
+}

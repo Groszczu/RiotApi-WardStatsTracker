@@ -1,0 +1,11 @@
+@import "../../variables.css";
+
+.victory-tag {
+  font-weight: bold;
+  color: var(--victory-card-text-clr);
+}
+
+.defeat-tag {
+  font-weight: bold;
+  color: var(--defeat-card-text-clr);
+}

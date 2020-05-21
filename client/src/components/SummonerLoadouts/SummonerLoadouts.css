@@ -1,0 +1,66 @@
+.champion-figure {
+  width: 50%;
+  overflow: hidden;
+}
+
+.champion-icon {
+  width: 100%;
+  height: auto;
+  border-radius: 100%;
+  max-width: 5rem;
+}
+
+.summoner-spell-img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  max-width: 2.45rem;
+}
+
+.summoner-spell-img + .summoner-spell-img {
+  margin-top: 5%;
+}
+
+.perk-img-container + .perk-img-container {
+  margin-top: 5%;
+}
+
+.loadouts {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.loadouts > * {
+  margin: 0 0.25rem;
+}
+
+.summoner-spells,
+.runes {
+  width: 25%;
+
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.perk-img {
+  width: 100%;
+  height: 100%;
+}
+
+.perk-img-container {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 100%;
+  background-color: var(--accent-clr);
+
+  width: 100%;
+  max-width: 2.45rem;
+  height: auto;
+
+  overflow: hidden;
+}

@@ -1,0 +1,8 @@
+.platform-dropdown {
+  display: inline-block;
+  width: 20%;
+}
+
+.platform-dropdown option {
+  font-size: 0.8rem;
+}

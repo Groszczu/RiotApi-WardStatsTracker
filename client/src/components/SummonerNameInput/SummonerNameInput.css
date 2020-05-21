@@ -1,0 +1,9 @@
+@import "../../variables.css";
+
+.summoner-name-input {
+  color: var(--dark-text-clr);
+  background-color: #ffffff;
+
+  width: 30%;
+  max-width: 900px;
+}

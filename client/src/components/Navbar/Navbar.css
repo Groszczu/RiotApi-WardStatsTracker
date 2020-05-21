@@ -1,0 +1,17 @@
+@import "../../variables.css";
+
+.navbar {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+
+  width: 100%;
+  padding: 1em 2em;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  background-color: var(--accent-clr);
+  border-bottom: 2px solid var(--border-clr);
+}

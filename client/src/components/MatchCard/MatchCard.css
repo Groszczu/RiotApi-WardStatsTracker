@@ -1,0 +1,22 @@
+@import "../../variables.css";
+
+.match-card {
+  display: flex;
+  background-color: var(--accent-clr);
+  border-radius: 5px;
+  align-items: center;
+  margin: 0.5em auto;
+}
+
+.match-card > section {
+  padding: 0.8em;
+  width: 100%;
+}
+
+.victory-card {
+  background-color: var(--victory-card-bg-clr);
+}
+
+.defeat-card {
+  background-color: var(--defeat-card-bg-clr);
+}
