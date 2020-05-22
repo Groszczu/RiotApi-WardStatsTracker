@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RiotApiClient;
+using WardStatsTracker.Core.Interfaces;
 using WardStatsTracker.Core.Models;
 
 namespace WardStatsTracker.Api.Controllers
@@ -11,23 +10,17 @@ namespace WardStatsTracker.Api.Controllers
     [ApiController]
     public class SummonersController : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private readonly IRiotApiClientFactory _riotApiClientFactory;
+        private readonly IRiotService _riotService;
 
-        public SummonersController(IRiotApiClientFactory riotApiClientFactory, IMapper mapper)
+        public SummonersController(IRiotService riotService)
         {
-            _riotApiClientFactory = riotApiClientFactory;
-            _mapper = mapper;
+            _riotService = riotService;
         }
 
         [HttpGet("{summonerName}")]
         public async Task<ActionResult<SummonerModel>> GetSummonerByName(string platformId, string summonerName)
         {
-            var client = _riotApiClientFactory.CreateClient(platformId);
-            var summoner = await client.GetSummoner(summonerName);
-
-            var summonerModel = _mapper.Map<SummonerModel>(summoner);
-            return summonerModel;
+            return await _riotService.GetSummoner(platformId, summonerName);
         }
     }
 }

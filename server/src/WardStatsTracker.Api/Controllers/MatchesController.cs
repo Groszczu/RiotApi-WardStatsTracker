@@ -1,8 +1,10 @@
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RiotApiClient;
+using Newtonsoft.Json.Serialization;
+using WardStatsTracker.Core.Helpers;
+using WardStatsTracker.Core.Interfaces;
 using WardStatsTracker.Core.Models;
+using WardStatsTracker.Core.Parameters;
 
 namespace WardStatsTracker.Api.Controllers
 {
@@ -11,36 +13,24 @@ namespace WardStatsTracker.Api.Controllers
     [ApiController]
     public class MatchesController : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private readonly IRiotApiClientFactory _riotApiClientFactory;
+        private readonly IRiotService _riotService;
 
-        public MatchesController(IRiotApiClientFactory riotApiClientFactory, IMapper mapper)
+        public MatchesController(IRiotService riotService)
         {
-            _riotApiClientFactory = riotApiClientFactory;
-            _mapper = mapper;
+            _riotService = riotService;
         }
 
-        [HttpGet("by-account/{accountId}")]
-        public async Task<ActionResult<MatchListModel>> GetMatchHistoryByAccount(string platformId,
-            string accountId, [FromQuery] int count = 10)
+        [HttpGet]
+        public async Task<ActionResult<MatchOverviewModel[]>> GetMatchesByAccount(string platformId,
+            [FromQuery] string accountId, [FromQuery] MatchesPagingParameters parameters)
         {
-            var client = _riotApiClientFactory.CreateClient(platformId);
-            var matchList = await client.GetMatchList(accountId, endIndex: count);
-
-            var matchListModel = _mapper.Map<MatchListModel>(matchList);
-
-            return matchListModel;
+            return await _riotService.GetMatchesByAccount(platformId, accountId, parameters);
         }
 
         [HttpGet("{matchId}")]
         public async Task<ActionResult<MatchDetailsModel>> GetMatchDetails(string platformId, long matchId)
         {
-            var client = _riotApiClientFactory.CreateClient(platformId);
-            var match = await client.GetMatch(matchId);
-
-            var matchModel = _mapper.Map<MatchDetailsModel>(match);
-
-            return matchModel;
+            return await _riotService.GetMatch(platformId, matchId);
         }
     }
 }

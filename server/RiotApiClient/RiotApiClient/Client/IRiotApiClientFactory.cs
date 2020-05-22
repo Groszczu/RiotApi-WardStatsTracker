@@ -1,4 +1,4 @@
-﻿﻿namespace RiotApiClient
+﻿namespace RiotApiClient
 {
     public interface IRiotApiClientFactory
     {

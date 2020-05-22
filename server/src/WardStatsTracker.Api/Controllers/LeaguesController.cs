@@ -1,7 +1,6 @@
-﻿﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RiotApiClient;
+using WardStatsTracker.Core.Interfaces;
 using WardStatsTracker.Core.Models;
 
 namespace WardStatsTracker.Api.Controllers
@@ -10,24 +9,18 @@ namespace WardStatsTracker.Api.Controllers
     [ApiController]
     public class LeaguesController : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private readonly IRiotApiClientFactory _riotApiClientFactory;
+        private readonly IRiotService _riotService;
 
-        public LeaguesController(IRiotApiClientFactory riotApiClientFactory, IMapper mapper)
+        public LeaguesController(IRiotService riotService)
         {
-            _riotApiClientFactory = riotApiClientFactory;
-            _mapper = mapper;
+            _riotService = riotService;
         }
 
-        [HttpGet("by-summoner/{summonerId}")]
-        public async Task<ActionResult<LeagueEntryModel[]>> GetLeaguesBySummoner(string platformId, string summonerId)
+        [HttpGet]
+        public async Task<ActionResult<LeagueEntryModel[]>> GetLeaguesBySummoner(string platformId,
+            [FromQuery] string summonerId)
         {
-            var client = _riotApiClientFactory.CreateClient(platformId);
-            var leagues = await client.GetLeaguesBySummoner(summonerId);
-
-            var leagueModels = _mapper.Map<LeagueEntryModel[]>(leagues);
-
-            return leagueModels;
+            return await _riotService.GetLeaguesBySummoner(platformId, summonerId);
         }
     }
 }

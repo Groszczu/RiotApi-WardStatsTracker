@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using Refit;
 
-namespace WardStatsTracker.Core.Error
+namespace WardStatsTracker.Core.Helpers
 {
     public static class ApiExceptionExtensions
     {

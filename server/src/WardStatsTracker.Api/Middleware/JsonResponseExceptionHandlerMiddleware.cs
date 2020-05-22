@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Refit;
-using WardStatsTracker.Core.Error;
+using WardStatsTracker.Core.Helpers;
 
 namespace WardStatsTracker.Api.Middleware
 {
