@@ -26,15 +26,20 @@ namespace WardStatsTracker.Infrastructure
             return _mapper.Map<SummonerModel>(summoner);
         }
 
-        public async Task<MatchOverviewModel[]> GetMatchesByAccount(string platformId, string accountId,
+        public async Task<PagedList<MatchOverviewModel>> GetMatchesByAccount(string platformId, string accountId,
             MatchesPagingParameters parameters)
         {
             var client = _clientFactory.CreateClient(platformId);
 
-            var (startIndex, endIndex) = PagingParametersHelper.ConvertPageParametersToIndices(parameters);
+            var (beginIndex, endIndex) = PagingParametersHelper.ConvertPageParametersToIndices(parameters);
 
-            var matchList = await client.GetMatchList(accountId, startIndex, endIndex);
-            return _mapper.Map<MatchOverviewModel[]>(matchList.Matches);
+            var matchList = await client.GetMatchList(accountId, beginIndex, endIndex);
+
+            var matches = _mapper.Map<MatchOverviewModel[]>(matchList.Matches);
+            var pagedMatchList =
+                new PagedList<MatchOverviewModel>(matches, matchList.TotalGames, parameters.Page, parameters.PageSize);
+
+            return pagedMatchList;
         }
 
         public async Task<MatchDetailsModel> GetMatch(string platformId, long matchId)
