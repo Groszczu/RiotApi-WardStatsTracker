@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RiotApiClient.Models
 {
@@ -19,6 +20,11 @@ namespace RiotApiClient.Models
         public long VilemawKills { get; set; }
         public long RiftHeraldKills { get; set; }
         public long DominionVictoryScore { get; set; }
-        public Ban[]? Bans { get; set; }
+        public List<Ban> Bans { get; set; }
+
+        public Team()
+        {
+            Bans = new List<Ban>();
+        }
     }
 }

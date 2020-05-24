@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace WardStatsTracker.Core.Models
 {
     public class MatchDetailsModel
@@ -8,6 +10,11 @@ namespace WardStatsTracker.Core.Models
         public string? PlatformId { get; set; }
         public int QueueId { get; set; }
         public int MapId { get; set; }
-        public GameParticipantModel[]? Participants { get; set; }
+        public List<GameParticipantModel> Participants { get; private set; }
+
+        public MatchDetailsModel()
+        {
+            Participants = new List<GameParticipantModel>();
+        }
     }
 }

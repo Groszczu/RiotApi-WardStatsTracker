@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Refit;
 using RiotApiClient.Models;
 using Xunit;
@@ -22,8 +23,7 @@ namespace RiotApiClient.IntegrationTests
             var match = await client.GetMatchList("YIDGOiVNVk13syOzWymCbEmWhkJaXA90Qdm_OLithz31yw");
 
             Assert.IsType<MatchList>(match);
-            Assert.IsType<MatchOverview[]>(match.Matches);
-            Assert.Equal("EUN1", match.Matches?[0].PlatformId);
+            Assert.IsAssignableFrom<ICollection<MatchOverview>>(match.Matches);
         }
 
         [Fact]

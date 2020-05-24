@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace RiotApiClient.Models
@@ -14,8 +15,15 @@ namespace RiotApiClient.Models
         [NotNull] public string? GameVersion { get; set; }
         [NotNull] public string? GameMode { get; set; }
         [NotNull] public string? GameType { get; set; }
-        [NotNull] public Team[]? Teams { get; set; }
-        [NotNull] public GameParticipant[]? Participants { get; set; }
-        [NotNull] public ParticipantIdentity[]? ParticipantIdentities { get; set; }
+        public List<Team> Teams { get; private set; }
+        public List<GameParticipant> Participants { get; private set; }
+        public List<ParticipantIdentity> ParticipantIdentities { get; private set; }
+
+        public MatchDetails()
+        {
+            Teams = new List<Team>();
+            Participants = new List<GameParticipant>();
+            ParticipantIdentities = new List<ParticipantIdentity>();
+        }
     }
 }
