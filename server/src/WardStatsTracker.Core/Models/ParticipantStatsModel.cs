@@ -9,9 +9,7 @@ namespace WardStatsTracker.Core.Models
         public int Deaths { get; set; }
         public int Assists { get; set; }
         public int VisionScore { get; set; }
-
-        [JsonPropertyName("perk0")] public int KeystonePerk { get; set; }
-
+        public int KeystonePerk { get; set; }
         public int PerkPrimaryStyle { get; set; }
         public int PerkSubStyle { get; set; }
     }

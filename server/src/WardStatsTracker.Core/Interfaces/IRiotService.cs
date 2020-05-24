@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WardStatsTracker.Core.Helpers;
 using WardStatsTracker.Core.Models;
 using WardStatsTracker.Core.Parameters;
@@ -13,6 +14,7 @@ namespace WardStatsTracker.Core.Interfaces
             MatchesPagingParameters parameters);
 
         Task<MatchDetailsModel> GetMatch(string platformId, long matchId);
-        Task<LeagueEntryModel[]> GetLeaguesBySummoner(string platformId, string summonerId);
+        Task<List<LeagueEntryModel>> GetLeaguesBySummoner(string platformId, string summonerId);
+        Task<List<GameParticipantModel>> GetMatchParticipants(string platformId, long matchId);
     }
 }

@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WardStatsTracker.Core.Interfaces;
 using WardStatsTracker.Core.Models;
 
 namespace WardStatsTracker.Api.Controllers
 {
-    [Route("{platformId}/[controller]")]
+    [Route("{platformId}/leagues")]
     [ApiController]
     public class LeaguesController : ControllerBase
     {
@@ -17,10 +19,11 @@ namespace WardStatsTracker.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<LeagueEntryModel[]>> GetLeaguesBySummoner(string platformId,
+        public async Task<ActionResult<IEnumerable<LeagueEntryModel>>> GetLeaguesBySummoner(string platformId,
             [FromQuery] string summonerId)
         {
-            return await _riotService.GetLeaguesBySummoner(platformId, summonerId);
+            var leagues = await _riotService.GetLeaguesBySummoner(platformId, summonerId);
+            return leagues.ToList();
         }
     }
 }

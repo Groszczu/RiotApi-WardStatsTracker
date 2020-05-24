@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using RiotApiClient;
 using WardStatsTracker.Core.Helpers;
@@ -49,11 +51,19 @@ namespace WardStatsTracker.Infrastructure
             return _mapper.Map<MatchDetailsModel>(matchDetails);
         }
 
-        public async Task<LeagueEntryModel[]> GetLeaguesBySummoner(string platformId, string summonerId)
+        public async Task<List<LeagueEntryModel>> GetLeaguesBySummoner(string platformId, string summonerId)
         {
             var client = _clientFactory.CreateClient(platformId);
             var leagues = await client.GetLeaguesBySummoner(summonerId);
-            return _mapper.Map<LeagueEntryModel[]>(leagues);
+            return _mapper.Map<List<LeagueEntryModel>>(leagues);
+        }
+
+        public async Task<List<GameParticipantModel>> GetMatchParticipants(string platformId, long matchId)
+        {
+            var client = _clientFactory.CreateClient(platformId);
+            var matchDetails = await client.GetMatch(matchId);
+            var matchDetailsModel = _mapper.Map<MatchDetailsModel>(matchDetails);
+            return matchDetailsModel.Participants.ToList();
         }
     }
 }

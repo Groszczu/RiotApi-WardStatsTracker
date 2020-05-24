@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WardStatsTracker.Core.Helpers;
@@ -8,7 +11,7 @@ using WardStatsTracker.Core.Parameters;
 namespace WardStatsTracker.Api.Controllers
 {
     [ResponseCache(Duration = 120)]
-    [Route("{platformId}/[controller]")]
+    [Route("{platformId}/matches")]
     [ApiController]
     public class MatchesController : ControllerBase
     {
@@ -20,7 +23,7 @@ namespace WardStatsTracker.Api.Controllers
         }
 
         [HttpGet(Name = "GetMatchesByAccount")]
-        public async Task<ActionResult<MatchOverviewModel[]>> GetMatchesByAccount(string platformId,
+        public async Task<ActionResult<IEnumerable<MatchOverviewModel>>> GetMatchesByAccount(string platformId,
             [FromQuery] string accountId, [FromQuery] MatchesPagingParameters parameters)
         {
             var pagedMatches = await _riotService.GetMatchesByAccount(platformId, accountId, parameters);
@@ -30,7 +33,7 @@ namespace WardStatsTracker.Api.Controllers
                 pagedMatches.HasNext ? CreateMatchUrl(accountId, parameters, ResourceUriType.NextPage) : null;
 
             Response.Headers.AddPaginationHeader(new PaginationMetadata(pagedMatches, prevPageUrl, nextPageUrl));
-            return pagedMatches.ToArray();
+            return pagedMatches;
         }
 
         [HttpGet("{matchId}")]

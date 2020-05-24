@@ -7,5 +7,6 @@ namespace WardStatsTracker.Core.Models
         public int Spell1Id { get; set; }
         public int Spell2Id { get; set; }
         public ParticipantStatsModel? Stats { get; set; }
+        public ParticipantIdentityModel? Identity { get; set; }
     }
 }

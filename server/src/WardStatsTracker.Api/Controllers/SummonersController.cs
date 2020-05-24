@@ -6,7 +6,7 @@ using WardStatsTracker.Core.Models;
 namespace WardStatsTracker.Api.Controllers
 {
     [ResponseCache(Duration = 300)]
-    [Route("{platformId}/[controller]")]
+    [Route("{platformId}/summoners")]
     [ApiController]
     public class SummonersController : ControllerBase
     {
