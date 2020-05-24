@@ -11,7 +11,7 @@ namespace WardStatsTracker.Core.Interfaces
         Task<SummonerModel> GetSummoner(string platformId, string summonerName);
 
         Task<PagedList<MatchOverviewModel>> GetMatchesByAccount(string platformId, string accountId,
-            MatchesPagingParameters parameters);
+            MatchesPagingParameters? parameters = null);
 
         Task<MatchDetailsModel> GetMatch(string platformId, long matchId);
         Task<List<LeagueEntryModel>> GetLeaguesBySummoner(string platformId, string summonerId);

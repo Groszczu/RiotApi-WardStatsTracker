@@ -29,10 +29,12 @@ namespace WardStatsTracker.Infrastructure
         }
 
         public async Task<PagedList<MatchOverviewModel>> GetMatchesByAccount(string platformId, string accountId,
-            MatchesPagingParameters parameters)
+            MatchesPagingParameters? parameters)
         {
             var client = _clientFactory.CreateClient(platformId);
 
+            parameters ??= new MatchesPagingParameters();
+            
             var (beginIndex, endIndex) = PagingParametersHelper.ConvertPageParametersToIndices(parameters);
 
             var matchList = await client.GetMatchList(accountId, beginIndex, endIndex);

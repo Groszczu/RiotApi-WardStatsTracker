@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WardStatsTracker.Core.Interfaces;
 using WardStatsTracker.Core.Models;
+using WardStatsTracker.Core.Parameters;
 
 namespace WardStatsTracker.Api.Controllers
 {
@@ -18,9 +19,18 @@ namespace WardStatsTracker.Api.Controllers
         }
 
         [HttpGet("{summonerName}")]
-        public async Task<ActionResult<SummonerModel>> GetSummonerByName(string platformId, string summonerName)
+        public async Task<ActionResult<SummonerModel>> GetSummonerByName(string platformId, string summonerName, [FromQuery] bool includeMatches = false)
         {
-            return await _riotService.GetSummoner(platformId, summonerName);
+            var summoner = await _riotService.GetSummoner(platformId, summonerName);
+            if (summoner.AccountId == null)
+                return NotFound("Summoner with given name could not be find");
+            
+            if (!includeMatches)
+                return summoner;
+
+            summoner.Matches = await _riotService.GetMatchesByAccount(platformId, summoner.AccountId);
+
+            return summoner;
         }
     }
 }
