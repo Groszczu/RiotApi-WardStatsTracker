@@ -13,8 +13,8 @@ const MatchInfoContainer = ({ match, isWin }) => {
     content = 'Loading...';
   } else if (fetchState.isError) {
     content = 'Something went wrong';
-  } else if (Array.isArray(fetchState.data) && fetchState.data.length > 0) {
-    const queueType = fetchState.data.find(q => q.queueId === match.queueId).description;
+  } else if (Array.isArray(fetchState.data) && fetchState.fetched) {
+    const queueType = fetchState.data.find(q => q.queueId === match.queueId)?.description ?? 'Unknown game type';
     content = <MatchInfoDetails queueType={queueType} match={match} isWin={isWin} />
   }
   return (

@@ -1,66 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import SummonerDetails from '../SummonerDetails/SummonerDetails';
 import MatchList from '../MatchList/MatchList';
-import Riot from '../../util/Riot';
-import { useIsMountedRef } from '../../hooks/hooks';
+import {useDataApi} from "../../hooks/hooks";
+import MatchCard from "../MatchCard/MatchCard";
 
-const AccountDetails = ({ match: pathMatch, timestamp }) => {
-  const platformMoniker = pathMatch.params.platform;
+const AccountDetails = ({match: pathMatch}) => {
+
+  const platformId = pathMatch.params.platform;
   const summonerName = pathMatch.params.summonerName;
 
-  const [matches, setMatches] = useState([]);
-  const [name, setName] = useState('');
-  const [accFound, setAccFound] = useState(true);
-
-  const isMountedRef = useIsMountedRef();
+  const [summonerFetchState] = useDataApi(`https://localhost:5001/${platformId}/summoners/${summonerName}?includeMatches=true`);
+  const [summoner, setSummoner] = useState(null);
 
   useEffect(() => {
-    async function fetchMatches() {
-      let summonerData;
-      let matchesDetails;
-      let matchHistory;
-      try {
-        summonerData = await Riot.getSummonerAndCacheAccountId(platformMoniker, summonerName);
-        const accountId = summonerData.accountId;
-        matchHistory = await Riot.getMatchHistory(platformMoniker, accountId);
-        matchesDetails = await Promise.all(
-          matchHistory.map(
-            async (m) => await Riot.getMatchDetails(platformMoniker, m.gameId)
-          )
-        );
-      } catch (error) {
-        if (isMountedRef.current) {
-          setAccFound(false);
-        }
-        return;
-      }
-
-      if (isMountedRef.current) {
-        setAccFound(true);
-      }
-
-      const matchHistoryWithDetails = matchHistory.map(m => Object.assign(m, matchesDetails.find(d => m.gameId === d.gameId)));
-
-      if (isMountedRef.current) {
-        setName(summonerData.name);
-        setMatches(matchHistoryWithDetails);
-      }
+    if (summonerFetchState.fetched) {
+      setSummoner({...summonerFetchState.data});
     }
+  }, [setSummoner, summonerFetchState]);
 
-    fetchMatches();
-  }, [isMountedRef, platformMoniker, summonerName, setMatches, setName, setAccFound, timestamp]);
-
-
-  if (accFound) {
-    return (
-      <div>
-        <SummonerDetails summonerName={name} />
-        <MatchList matches={matches} />
-      </div>
-    );
+  if (!summonerFetchState.fetched || !summoner) {
+    return <div>Loading...</div>
   }
 
-  return <h1>Summoner not found</h1>;
+  const {name, matches, accountId} = summoner;
+  const matchCards = matches.map(match => (
+    <li key={match.gameId}>
+      <MatchCard match={match} accountId={accountId}/>
+    </li>
+  ));
+
+  return (
+    <div>
+      <SummonerDetails summonerName={name}/>
+      <MatchList matches={matchCards}/>
+    </div>
+  );
 }
 
 export default AccountDetails;

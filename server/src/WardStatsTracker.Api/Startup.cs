@@ -1,10 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,6 +32,10 @@ namespace WardStatsTracker.Api
 
             services.AddControllers(c => c.EnableEndpointRouting = false)
                 .ConfigureControllers();
+
+            services.AddCors(options =>
+                options.AddPolicy("AllowClientHost",
+                    builder => builder.WithOrigins(Configuration["AllowedHosts"])));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +43,8 @@ namespace WardStatsTracker.Api
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             else app.UseJsonResponseExceptionHandler();
+
+            app.UseCors("AllowClientHost");
 
             app.UseMvc();
         }

@@ -1,17 +1,18 @@
-import { generateResourceKey } from './KeyGenerator';
+import {generateResourceKey} from './KeyGenerator';
 
 const DataDragon = {
+  URI: 'https://ddragon.leagueoflegends.com',
+
   async getResource(resourceType, resourceId) {
     const resourceKey = generateResourceKey(resourceType, resourceId);
     let resourceString = sessionStorage.getItem(resourceKey);
     if (resourceString) {
-      const resource = JSON.parse(resourceString);
-      return resource;
+      return JSON.parse(resourceString);
     }
 
     const version = await this._getLatestVersion();
 
-    const endpoint = `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/${resourceType}.json`;
+    const endpoint = `${this.URI}/cdn/${version}/data/en_US/${resourceType}.json`;
 
     const response = await fetch(endpoint);
 
@@ -25,21 +26,28 @@ const DataDragon = {
     return resource;
   },
 
-  async getResourceImgUrl(resourceType, resourceId) {
-    const resourceData = await this.getResource(resourceType, resourceId);
-    const iconPath = resourceData.image.full;
+  async getResourceImgUrl(resourceType, resource) {
+    const iconPath = resource.image.full;
+    const imgCatalog = resource.image.group;
+
     const version = await this._getLatestVersion();
 
-    const imgCatalog = DataDragon.IMAGES[resourceType];
-
-    return `https://ddragon.leagueoflegends.com/cdn/${version}/img/${imgCatalog}/${iconPath}`;
+    return `${this.URI}/cdn/${version}/img/${imgCatalog}/${iconPath}`;
   },
 
   async _getLatestVersion() {
-    const versionEndpoint = 'https://ddragon.leagueoflegends.com/api/versions.json';
+    const versionsKey = generateResourceKey('dd', 'versions');
+    let version = sessionStorage.getItem(versionsKey);
+    if (version) {
+      return version;
+    }
+
+    const versionEndpoint = `${this.URI}/api/versions.json`;
     const versions = await fetch(versionEndpoint);
     const versionsJson = await versions.json();
-    return versionsJson[0];
+    const latestVersion = versionsJson[0];
+    sessionStorage.setItem(versionsKey, latestVersion);
+    return latestVersion;
   }
 };
 
@@ -47,10 +55,5 @@ DataDragon.RESOURCES = {
   CHAMPIONS: 'champion',
   SUMMONER_SPELLS: 'summoner',
 };
-DataDragon.IMAGES = {
-  'champion': 'champion',
-  'summoner': 'spell'
-};
-
 
 export default DataDragon;

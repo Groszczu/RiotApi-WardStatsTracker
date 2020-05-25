@@ -9,7 +9,7 @@ const SummonerLoadouts = ({ participant, stats }) => {
     <section className="loadouts">
       <ChampionFigure championId={participant.championId} />
       <SummonerSpells spellIds={[participant.spell1Id, participant.spell2Id]} />
-      <Runes keystoneId={stats.perk0} perkSubStyleId={stats.perkSubStyle} />
+      <Runes keystoneId={stats.keystonePerk} perkSubStyleId={stats.perkSubStyle} />
     </section>
   );
 };

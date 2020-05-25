@@ -67,7 +67,6 @@ const CommunityDragon = {
     const pathMatch = perkStyle.iconPath.match(/\/styles\/(?<imgFile>\w+\.png)/i);
     const { imgFile } = pathMatch.groups;
     return `${this.URI}/perk-images/styles/${imgFile.toLowerCase()}`;
-
   }
 };
 

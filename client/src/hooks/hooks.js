@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useReducer } from 'react';
+import {useEffect, useReducer, useRef, useState} from 'react';
 
 export const useIsMountedRef = () => {
   const isMountedRef = useRef(null);
@@ -17,12 +17,14 @@ const dataFetchReducer = (state, action) => {
       return {
         ...state,
         isLoading: true,
+        fetched: false,
         isError: false,
       };
     case 'FETCH_SUCCESS':
       return {
         ...state,
         isLoading: false,
+        fetched: true,
         isError: false,
         data: action.payload,
       };
@@ -30,6 +32,7 @@ const dataFetchReducer = (state, action) => {
       return {
         ...state,
         isLoading: false,
+        fetched: false,
         isError: true,
       };
     default:
@@ -42,6 +45,7 @@ export const useDataApi = (initialUrl, initialData) => {
 
   const [state, dispatch] = useReducer(dataFetchReducer, {
     isLoading: false,
+    fetched: false,
     isError: false,
     data: initialData,
   });
@@ -49,28 +53,21 @@ export const useDataApi = (initialUrl, initialData) => {
   useEffect(() => {
     let cancelled = false;
 
-    const fetchData = async () => {
-      dispatch({ type: 'FETCH_INIT' });
-      try {
-        const response = await fetch(url);
-
+    fetch(url)
+      .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
-
-        const responseBody = await response.json();
-
-        if (!cancelled) {
-          dispatch({ type: 'FETCH_SUCCESS', payload: responseBody });
-        }
-      } catch (error) {
-        if (!cancelled) {
-          dispatch({ type: 'FETCH_FAILURE' });
-        }
-      }
-    }
-
-    fetchData();
+        return response.json();
+      })
+      .then(responseBody => {
+        if (!cancelled)
+          dispatch({type: 'FETCH_SUCCESS', payload: responseBody});
+      })
+      .catch(error => {
+        if (!cancelled)
+          dispatch({type: 'FETCH_FAILURE'});
+      });
 
     return () => {
       cancelled = true;

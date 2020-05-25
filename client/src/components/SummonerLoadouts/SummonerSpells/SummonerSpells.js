@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import DataDragon from '../../../util/DataDragon';
 import SummonerSpell from './SummonerSpell';
-import { useIsMountedRef } from '../../../hooks/hooks';
+import {useIsMountedRef} from '../../../hooks/hooks';
 
-const SummonerSpells = ({ spellIds }) => {
+const SummonerSpells = ({spellIds}) => {
   const [spells, setSpells] = useState([]);
   const isMountedRef = useIsMountedRef();
 
   useEffect(() => {
     async function setSpellsData() {
       const spellsData = await Promise.all(
-        spellIds.map(async (spellId) => ({
-          data: await DataDragon.getResource(DataDragon.RESOURCES.SUMMONER_SPELLS, spellId),
-          imgUrl: await DataDragon.getResourceImgUrl(DataDragon.RESOURCES.SUMMONER_SPELLS, spellId),
-        }))
+        spellIds.map(async (spellId) => {
+          const spell = await DataDragon.getResource(DataDragon.RESOURCES.SUMMONER_SPELLS, spellId);
+          const imgUrl = await DataDragon.getResourceImgUrl(DataDragon.RESOURCES.SUMMONER_SPELLS, spell);
+          return {
+            data: spell,
+            imgUrl: imgUrl,
+          }
+        })
       );
 
       if (isMountedRef.current) {
@@ -27,7 +31,7 @@ const SummonerSpells = ({ spellIds }) => {
 
   return (
     <div className="summoner-spells">
-      {spells.map(s => <SummonerSpell key={s.data.id} spell={s} />)}
+      {spells.map(s => <SummonerSpell key={s.data.id} spell={s}/>)}
     </div>
   );
 };
