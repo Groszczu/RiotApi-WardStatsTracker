@@ -1,0 +1,17 @@
+.summoner-details {
+    width: 50%;
+    background-color: var(--accent-clr);
+}
+
+.profile-icon {
+    width: 60%;
+    height: auto;
+    border-radius: 100%;
+    max-width: 200px;
+    margin: 3%;
+}
+
+.summoner-name {
+    font-size: 2rem;
+    margin: .5em;
+}

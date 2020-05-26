@@ -21,7 +21,7 @@ const MatchCard = ({ match, accountId }) => {
   const stats = participant.stats;
 
   return (
-    <div className={`match-card ${stats.win ? 'victory-card' : 'defeat-card'}`}>
+    <div className={`card match-card ${stats.win ? 'victory-card' : 'defeat-card'}`}>
       <MatchInfoContainer match={matchDetails} isWin={stats.win} />
       <SummonerLoadouts participant={participant} stats={stats} />
       <GameStats stats={stats} />

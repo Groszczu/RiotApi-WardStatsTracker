@@ -10,7 +10,8 @@ const PlatformSelect = (props) => {
   return (
     <select className="platform-dropdown" onChange={_handleChange} defaultValue="Platform">
       <option disabled>Platform</option>
-      {props.platforms.map(p => <option key={p.platformMoniker} value={p.platformMoniker}>{p.platformName}</option>)}
+      <option value="eun1">EUNE</option>
+      <option value="euw1">EUW</option>
     </select>
   );
 }

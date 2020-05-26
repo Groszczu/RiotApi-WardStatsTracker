@@ -13,7 +13,7 @@ const SummonerSpells = ({spellIds}) => {
       const spellsData = await Promise.all(
         spellIds.map(async (spellId) => {
           const spell = await DataDragon.getResource(DataDragon.RESOURCES.SUMMONER_SPELLS, spellId);
-          const imgUrl = await DataDragon.getResourceImgUrl(DataDragon.RESOURCES.SUMMONER_SPELLS, spell);
+          const imgUrl = await DataDragon.getResourceImgUrl(spell);
           return {
             data: spell,
             imgUrl: imgUrl,

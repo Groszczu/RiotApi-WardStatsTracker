@@ -20,13 +20,13 @@ const DataDragon = {
 
     const data = Object.values(responseJson.data);
 
-    const resource = data.find(r => Number(r.key) === resourceId);
-    sessionStorage.setItem(resourceKey, JSON.stringify(resource));
+    const resource = data.find(r => Number(r.key) === resourceId || Number(r.id) === resourceId);
+    if (resource) sessionStorage.setItem(resourceKey, JSON.stringify(resource));
 
     return resource;
   },
 
-  async getResourceImgUrl(resourceType, resource) {
+  async getResourceImgUrl(resource) {
     const iconPath = resource.image.full;
     const imgCatalog = resource.image.group;
 
@@ -46,7 +46,7 @@ const DataDragon = {
     const versions = await fetch(versionEndpoint);
     const versionsJson = await versions.json();
     const latestVersion = versionsJson[0];
-    sessionStorage.setItem(versionsKey, latestVersion);
+    if (latestVersion) sessionStorage.setItem(versionsKey, latestVersion);
     return latestVersion;
   }
 };
@@ -54,6 +54,7 @@ const DataDragon = {
 DataDragon.RESOURCES = {
   CHAMPIONS: 'champion',
   SUMMONER_SPELLS: 'summoner',
+  ICONS: 'profileicon'
 };
 
 export default DataDragon;

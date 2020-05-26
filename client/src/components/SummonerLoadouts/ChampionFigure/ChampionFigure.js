@@ -12,7 +12,7 @@ const ChampionFigure = ({ championId }) => {
   useEffect(() => {
     async function setChampionData() {
       const championData = await DataDragon.getResource(DataDragon.RESOURCES.CHAMPIONS, championId);
-      const imgUrl = await DataDragon.getResourceImgUrl(DataDragon.RESOURCES.CHAMPIONS, championData);
+      const imgUrl = await DataDragon.getResourceImgUrl(championData);
 
       if (isMountedRef.current) {
         setChampionName(championData.name || 'champion not found');

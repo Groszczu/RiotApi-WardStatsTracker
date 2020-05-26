@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import SummonerDetails from '../SummonerDetails/SummonerDetails';
 import MatchList from '../MatchList/MatchList';
 import {useDataApi} from "../../hooks/hooks";
@@ -8,21 +8,24 @@ const AccountDetails = ({match: pathMatch}) => {
 
   const platformId = pathMatch.params.platform;
   const summonerName = pathMatch.params.summonerName;
+  const endpoint = `https://localhost:5001/${platformId}/summoners/${summonerName}?includeMatches=true`;
 
-  const [summonerFetchState] = useDataApi(`https://localhost:5001/${platformId}/summoners/${summonerName}?includeMatches=true`);
-  const [summoner, setSummoner] = useState(null);
+  const [summonerFetchState, doFetch] = useDataApi(endpoint);
 
   useEffect(() => {
-    if (summonerFetchState.fetched) {
-      setSummoner({...summonerFetchState.data});
-    }
-  }, [setSummoner, summonerFetchState]);
+    doFetch(endpoint);
+  }, [doFetch, endpoint])
 
-  if (!summonerFetchState.fetched || !summoner) {
+  if (summonerFetchState.isError) {
+    return <h2>Summoner not found</h2>
+  }
+
+  if (!summonerFetchState.fetched) {
     return <div>Loading...</div>
   }
 
-  const {name, matches, accountId} = summoner;
+  const summoner = summonerFetchState.data;
+  const {matches, accountId} = summoner;
   const matchCards = matches.map(match => (
     <li key={match.gameId}>
       <MatchCard match={match} accountId={accountId}/>
@@ -30,10 +33,10 @@ const AccountDetails = ({match: pathMatch}) => {
   ));
 
   return (
-    <div>
-      <SummonerDetails summonerName={name}/>
+    <>
+      <SummonerDetails summoner={summoner}/>
       <MatchList matches={matchCards}/>
-    </div>
+    </>
   );
 }
 

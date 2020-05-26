@@ -6,9 +6,11 @@ html {
   --contrast-clr: #00c9db;
   --border-clr: #7372B2;
   --selected-clr: #4A5071;
-  --victory-card-bg-clr: rgba(157, 155, 255, 0.7);
-  --victory-card-text-clr: rgb(25, 23, 138); 
+  --victory-card-bg-clr: rgba(72, 224, 72, 0.7);
+  --victory-card-text-clr: rgb(7, 61, 0);
+  --victory-border-accent: #109e00;
   --defeat-card-bg-clr: rgba(187, 83, 83, 0.8);
   --defeat-card-text-clr: rgb(85, 1, 1);
   --death-text-clr: rgb(31, 0, 0);
+  --defeat-border-accent: #ac1f1f;
 }

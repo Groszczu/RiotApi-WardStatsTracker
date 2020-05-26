@@ -10,12 +10,10 @@ const App = () => {
     <Router>
       <div className="App">
         <Navbar/>
-        <main className="content">
+        <main className="content container">
           <Switch>
-            <Route exact path="/" component={Home}/>
-            <Route exact path="/:platform/account/:summonerName"
-                   render={(props) => <AccountDetails {...props} timestamp={Date.now()}/>}
-            />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/:platform/account/:summonerName" component={AccountDetails} />
           </Switch>
         </main>
       </div>

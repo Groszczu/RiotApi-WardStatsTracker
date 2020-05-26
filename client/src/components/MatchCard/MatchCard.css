@@ -1,10 +1,14 @@
 @import "../../variables.css";
 
-.match-card {
-  display: flex;
+.card {
   background-color: var(--accent-clr);
   border-radius: 5px;
   align-items: center;
+  margin: 0.5em 0;
+}
+
+.match-card {
+  display: flex;
   margin: 0.5em auto;
 }
 
@@ -15,8 +19,10 @@
 
 .victory-card {
   background-color: var(--victory-card-bg-clr);
+  border-right: 20px solid var(--victory-border-accent);
 }
 
 .defeat-card {
   background-color: var(--defeat-card-bg-clr);
+  border-right: 20px solid var(--defeat-border-accent);
 }

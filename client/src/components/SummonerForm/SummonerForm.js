@@ -4,13 +4,10 @@ import PlatformSelect from '../PlatformSelect/PlatformSelect';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import SummonerNameInput from '../SummonerNameInput/SummonerNameInput';
 import { withRouter } from 'react-router-dom';
-import { useDataApi } from '../../hooks/hooks';
 
 const SummonerForm = (props) => {
   const [summonerName, setSummonerName] = useState('');
   const [platform, setPlatform] = useState('');
-
-  const [fetchState] = useDataApi('/api/platforms', []);
 
   const _onSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +20,7 @@ const SummonerForm = (props) => {
 
   return (
     <form className="summoner-search" onSubmit={_onSubmit}>
-      <PlatformSelect onChange={setPlatform} platforms={fetchState.data} />
+      <PlatformSelect onChange={setPlatform} />
       <SummonerNameInput onChange={setSummonerName} />
       <SubmitButton className={!summonerName || !platform ? 'link-disabled' : ''} />
     </form>
