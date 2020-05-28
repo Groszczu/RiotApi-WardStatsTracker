@@ -9,7 +9,6 @@ const CommunityDragon = {
     const perksString = sessionStorage.getItem(perksKey);
     let perksJson;
     if (!perksString) {
-      console.log('fetching perks');
       const endpoint = `${this.URI}/perks.json`;
       const perks = await fetch(endpoint);
 
@@ -30,7 +29,6 @@ const CommunityDragon = {
     const stylesString = sessionStorage.getItem(stylesKey);
     let stylesJson;
     if (!stylesString) {
-      console.log('fetching perk styles');
       const endpoint = `${this.URI}/perkstyles.json`;
       const perkStyles = await fetch(endpoint);
 

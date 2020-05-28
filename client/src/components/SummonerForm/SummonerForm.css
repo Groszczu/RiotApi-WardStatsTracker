@@ -1,5 +1,22 @@
 @import "../../variables.css";
 
+.platform-dropdown {
+  display: inline-block;
+  width: 20%;
+}
+
+.platform-dropdown option {
+  font-size: 0.8rem;
+}
+
+.summoner-name-input {
+  color: var(--dark-text-clr);
+  background-color: #ffffff;
+
+  width: 30%;
+  max-width: 900px;
+}
+
 .summoner-search {
   justify-self: center;
   margin: 0 auto;
