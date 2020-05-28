@@ -1,53 +1,52 @@
-import { generateResourceKey } from './KeyGenerator';
+import {generateResourceKey} from "./KeyGenerator";
 
 const CommunityDragon = {
   URI: 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1',
   DEFAULT_RUNE_IMG_URL: function(){ return `${this.URI}/perk-images/styles/runesicon.png` },
 
   async getPerk(perkId) {
-    const perkKey = generateResourceKey('perk', perkId);
-    const perkString = sessionStorage.getItem(perkKey);
-    if (perkString) {
-      return JSON.parse(perkString);
+    const perksKey = generateResourceKey('cd', 'perks');
+    const perksString = sessionStorage.getItem(perksKey);
+    let perksJson;
+    if (!perksString) {
+      console.log('fetching perks');
+      const endpoint = `${this.URI}/perks.json`;
+      const perks = await fetch(endpoint);
+
+      if (!perks.ok)
+        return null;
+
+      perksJson = await perks.json();
+      sessionStorage.setItem(perksKey, JSON.stringify(perksJson));
+    } else {
+      perksJson = JSON.parse(perksString);
     }
 
-    const endpoint = `${this.URI}/perks.json`;
-
-    const perks = await fetch(endpoint);
-
-    const perksJson = await perks.json();
-
-    const perk = perksJson.find(p => p.id === perkId);
-    if (perk) {
-      sessionStorage.setItem(perkKey, JSON.stringify(perk));
-      return perk;
-    }
+    return perksJson.find(p => p.id === perkId) || null;
   },
 
   async getPerkStyle(perkStyleId) {
-    const perkStyleKey = generateResourceKey('perkstyle', perkStyleId);
+    const stylesKey = generateResourceKey('cd', 'perkstyles');
+    const stylesString = sessionStorage.getItem(stylesKey);
+    let stylesJson;
+    if (!stylesString) {
+      console.log('fetching perk styles');
+      const endpoint = `${this.URI}/perkstyles.json`;
+      const perkStyles = await fetch(endpoint);
 
-    const perkStyleString = sessionStorage.getItem(perkStyleKey);
-    if (perkStyleString) {
-      return JSON.parse(perkStyleString);
+      if (!perkStyles.ok)
+        return null;
+
+      stylesJson = await perkStyles.json();
+      sessionStorage.setItem(stylesKey, JSON.stringify(stylesJson));
+    } else {
+      stylesJson = JSON.parse(stylesString);
     }
 
-    const endpoint = `${this.URI}/perkstyles.json`;
-
-    const perkStyles = await fetch(endpoint);
-
-    const perkStylesJson = await perkStyles.json();
-
-    const perkStyle = perkStylesJson.styles.find(s => s.id === perkStyleId);
-    if (perkStyle) {
-      sessionStorage.setItem(perkStyleKey, JSON.stringify(perkStyle))
-      return perkStyle;
-    }
+    return stylesJson.styles.find(s => s.id === perkStyleId) || null;
   },
 
-  async getPerkImgUrl(perkId) {
-    const perk = await this.getPerk(perkId);
-
+  async getPerkImgUrl(perk) {
     if (!perk) {
       return this.DEFAULT_RUNE_IMG_URL();
     }
@@ -57,9 +56,7 @@ const CommunityDragon = {
     return `${this.URI}/perk-images/styles/${style.toLowerCase()}/${perkName.toLowerCase()}/${imgFile.toLowerCase()}`;
   }, 
 
-  async getPerkStyleImgUrl(perkStyleId) {
-    const perkStyle = await this.getPerkStyle(perkStyleId);
-
+  async getPerkStyleImgUrl(perkStyle) {
     if (!perkStyle) {
       return this.DEFAULT_RUNE_IMG_URL();
     }

@@ -36,6 +36,10 @@ body::-webkit-scrollbar-thumb {
   flex-wrap: nowrap;
 }
 
+.centered {
+  margin: 0 auto;
+}
+
 em {
   font-style: normal;
   font-weight: 600;
@@ -48,5 +52,33 @@ em {
 
   .summoner-details {
     width: 100% !important;
+  }
+
+  .match-list {
+    margin-left: 0 !important;
+  }
+
+  .champion-icon {
+    max-width: 7rem !important;
+  }
+
+  .summoner-spell-img,
+  .perk-img-container {
+      max-width: 3.45rem !important;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .match-card {
+    font-size: 1.3rem;
+  }
+
+  .match-card > section {
+    width: 100% !important;
+  }
+
+  .loadouts,
+  .game-stats {
+    order: -1;
   }
 }

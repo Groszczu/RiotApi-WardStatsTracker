@@ -8,7 +8,7 @@ export const useIsMountedRef = () => {
     return () => isMountedRef.current = false;
   });
 
-  return isMountedRef
+  return isMountedRef;
 };
 
 const dataFetchReducer = (state, action) => {
@@ -53,6 +53,7 @@ export const useDataApi = (initialUrl, initialData = null) => {
   useEffect(() => {
     let cancelled = false;
 
+    dispatch({type: 'FETCH_INIT'});
     fetch(url)
       .then(response => {
         if (!response.ok) {
@@ -61,12 +62,14 @@ export const useDataApi = (initialUrl, initialData = null) => {
         return response.json();
       })
       .then(responseBody => {
-        if (!cancelled)
+        if (!cancelled) {
           dispatch({type: 'FETCH_SUCCESS', payload: responseBody});
+        }
       })
       .catch(error => {
-        if (!cancelled)
+        if (!cancelled) {
           dispatch({type: 'FETCH_FAILURE'});
+        }
       });
 
     return () => {
@@ -75,4 +78,4 @@ export const useDataApi = (initialUrl, initialData = null) => {
   }, [url]);
 
   return [state, setUrl];
-}
+};

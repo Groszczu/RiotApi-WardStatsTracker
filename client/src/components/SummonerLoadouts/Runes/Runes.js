@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import CommunityDragon from '../../../util/CommunityDragon';
 import RuneDetails from './RuneDetails';
 import { useIsMountedRef } from '../../../hooks/hooks';
@@ -10,14 +10,18 @@ const Runes = ({ keystoneId, perkSubStyleId }) => {
 
   useEffect(() => {
     async function setRunesData() {
+      const keystoneData = await CommunityDragon.getPerk(keystoneId);
+      const keystoneImgUrl = await CommunityDragon.getPerkImgUrl(keystoneData);
       const keystone = {
-        data: await CommunityDragon.getPerk(keystoneId),
-        imgUrl: await CommunityDragon.getPerkImgUrl(keystoneId),
+        data: keystoneData,
+        imgUrl: keystoneImgUrl
       };
 
+      const subStyleData = await CommunityDragon.getPerkStyle(perkSubStyleId);
+      const subStyleImgUrl = await CommunityDragon.getPerkStyleImgUrl(subStyleData);
       const subStyle = {
-        data: await CommunityDragon.getPerkStyle(perkSubStyleId),
-        imgUrl: await CommunityDragon.getPerkStyleImgUrl(perkSubStyleId),
+        data: subStyleData,
+        imgUrl: subStyleImgUrl
       };
 
       if (isMountedRef.current) {

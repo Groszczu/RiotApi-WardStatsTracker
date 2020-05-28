@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import DataDragon from '../../../util/DataDragon';
 import ChampionCaption from './ChampionCaption';
 import ChampionIcon from './ChampionIcon';

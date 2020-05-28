@@ -4,26 +4,28 @@ const DataDragon = {
   URI: 'https://ddragon.leagueoflegends.com',
 
   async getResource(resourceType, resourceId) {
-    const resourceKey = generateResourceKey(resourceType, resourceId);
-    let resourceString = sessionStorage.getItem(resourceKey);
-    if (resourceString) {
-      return JSON.parse(resourceString);
+    const resourceKey = generateResourceKey('dd', resourceType);
+    const resourcesString = sessionStorage.getItem(resourceKey);
+    let resources;
+    if (!resourcesString) {
+      const version = await this._getLatestVersion();
+
+      const endpoint = `${this.URI}/cdn/${version}/data/en_US/${resourceType}.json`;
+
+      const response = await fetch(endpoint);
+
+      if (!response.ok)
+        return null;
+
+      resources = await response.json();
+      sessionStorage.setItem(resourceKey, JSON.stringify(resources));
+    } else {
+      resources = JSON.parse(resourcesString);
     }
 
-    const version = await this._getLatestVersion();
+    const data = Object.values(resources.data);
 
-    const endpoint = `${this.URI}/cdn/${version}/data/en_US/${resourceType}.json`;
-
-    const response = await fetch(endpoint);
-
-    const responseJson = await response.json();
-
-    const data = Object.values(responseJson.data);
-
-    const resource = data.find(r => Number(r.key) === resourceId || Number(r.id) === resourceId);
-    if (resource) sessionStorage.setItem(resourceKey, JSON.stringify(resource));
-
-    return resource;
+    return data.find(r => Number(r.key) === resourceId || Number(r.id) === resourceId);
   },
 
   async getResourceImgUrl(resource) {

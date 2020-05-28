@@ -3,12 +3,12 @@ import SummonerDetails from '../SummonerDetails/SummonerDetails';
 import MatchList from '../MatchList/MatchList';
 import {useDataApi} from "../../hooks/hooks";
 import MatchCard from "../MatchCard/MatchCard";
+import Config from "../../configuration";
 
 const AccountDetails = ({match: pathMatch}) => {
-
   const platformId = pathMatch.params.platform;
   const summonerName = pathMatch.params.summonerName;
-  const endpoint = `https://localhost:5001/${platformId}/summoners/${summonerName}?includeMatches=true`;
+  const endpoint = `${Config.apiGateway.url}/${platformId}/summoners/${summonerName}`;
 
   const [summonerFetchState, doFetch] = useDataApi(endpoint);
 
@@ -17,11 +17,11 @@ const AccountDetails = ({match: pathMatch}) => {
   }, [doFetch, endpoint])
 
   if (summonerFetchState.isError) {
-    return <h2>Summoner not found</h2>
+    return <h2 className="centered">Summoner not found</h2>
   }
 
   if (!summonerFetchState.fetched) {
-    return <div>Loading...</div>
+    return <h2 className="centered">Loading...</h2>
   }
 
   const summoner = summonerFetchState.data;

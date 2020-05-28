@@ -4,16 +4,17 @@ import './MatchCard.css';
 import SummonerLoadouts from '../SummonerLoadouts/SummonerLoadouts';
 import GameStats from '../GameStats/GameStats';
 import {useDataApi} from "../../hooks/hooks";
+import Config from '../../configuration';
 
 const MatchCard = ({ match, accountId }) => {
-  const [ matchFetchState ] = useDataApi(`https://localhost:5001/${match.platformId}/matches/${match.gameId}`)
+  const [ matchFetchState ] = useDataApi(`${Config.apiGateway.url}/${match.platformId}/matches/${match.gameId}`);
 
   const getParticipant = (match, accountId) => {
     return match.participants.find(p => p.identity.accountId === accountId);
   };
 
   if (!matchFetchState.fetched) {
-    return <></>;
+    return null;
   }
 
   const matchDetails = matchFetchState.data;
