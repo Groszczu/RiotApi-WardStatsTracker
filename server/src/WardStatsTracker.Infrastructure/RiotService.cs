@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Refit;
 using RiotApiClient;
+using RiotApiClient.Models;
 using WardStatsTracker.Core.Helpers;
 using WardStatsTracker.Core.Interfaces;
 using WardStatsTracker.Core.Models;
@@ -21,14 +24,23 @@ namespace WardStatsTracker.Infrastructure
             _mapper = mapper;
         }
 
-        public async Task<SummonerModel> GetSummoner(string platformId, string summonerName)
+        public async Task<SummonerModel?> GetSummoner(string platformId, string summonerName)
         {
             var client = _clientFactory.CreateClient(platformId);
-            var summoner = await client.GetSummoner(summonerName);
+            Summoner summoner;
+            try
+            {
+                summoner = await client.GetSummoner(summonerName);
+            }
+            catch (ApiException)
+            {
+                return null;
+            }
+            
             return _mapper.Map<SummonerModel>(summoner);
         }
 
-        public async Task<PagedList<MatchOverviewModel>> GetMatchesByAccount(string platformId, string accountId,
+        public async Task<PagedList<MatchOverviewModel>?> GetMatchesByAccount(string platformId, string accountId,
             MatchesPagingParameters? parameters)
         {
             var client = _clientFactory.CreateClient(platformId);
@@ -37,7 +49,15 @@ namespace WardStatsTracker.Infrastructure
             
             var (beginIndex, endIndex) = PagingParametersHelper.ConvertPageParametersToIndices(parameters);
 
-            var matchList = await client.GetMatchList(accountId, beginIndex, endIndex);
+            MatchList matchList;
+            try
+            {
+                matchList = await client.GetMatchList(accountId, beginIndex, endIndex);
+            }
+            catch (ApiException)
+            {
+                return null;
+            }
 
             var matches = _mapper.Map<MatchOverviewModel[]>(matchList.Matches);
             var pagedMatchList =

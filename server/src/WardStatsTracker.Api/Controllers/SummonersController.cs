@@ -26,26 +26,14 @@ namespace WardStatsTracker.Api.Controllers
             [FromQuery] bool includeMatches = true, 
             [FromQuery] bool includeLeagues = true)
         {
-            SummonerModel summoner;
-            try
-            {
-                summoner = await _riotService.GetSummoner(platformId, summonerName);
-            }
-            catch (ApiException)
-            {
+            var summoner = await _riotService.GetSummoner(platformId, summonerName);
+            if (summoner == null)
                 return NotFound("Summoner with given name could not be find");
-            }
             
             if (includeMatches)
             {
-                try
-                {
-                    summoner.Matches = await _riotService.GetMatchesByAccount(platformId, summoner.AccountId!);
-                }
-                catch (ApiException)
-                {
-                    summoner.Matches = new List<MatchOverviewModel>();
-                }
+                summoner.Matches = await _riotService.GetMatchesByAccount(platformId, summoner.AccountId!) 
+                    ?? new List<MatchOverviewModel>();
             }
 
             if (includeLeagues)

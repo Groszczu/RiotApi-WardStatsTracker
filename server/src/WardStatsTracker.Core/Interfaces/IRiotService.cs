@@ -8,9 +8,9 @@ namespace WardStatsTracker.Core.Interfaces
 {
     public interface IRiotService
     {
-        Task<SummonerModel> GetSummoner(string platformId, string summonerName);
+        Task<SummonerModel?> GetSummoner(string platformId, string summonerName);
 
-        Task<PagedList<MatchOverviewModel>> GetMatchesByAccount(string platformId, string accountId,
+        Task<PagedList<MatchOverviewModel>?> GetMatchesByAccount(string platformId, string accountId,
             MatchesPagingParameters? parameters = null);
 
         Task<MatchDetailsModel> GetMatch(string platformId, long matchId);
