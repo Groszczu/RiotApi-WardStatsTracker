@@ -34,8 +34,13 @@ namespace WardStatsTracker.Api
                 .ConfigureControllers();
 
             services.AddCors(options =>
-                options.AddPolicy("AllowClientHost",
-                    builder => builder.WithOrigins(Configuration["AllowedHosts"])));
+                options.AddPolicy("AllowGet",
+                    builder =>
+                        builder
+                            .WithOrigins(Configuration["AllowedHosts"])
+                            .WithMethods("GET")
+                )
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +49,7 @@ namespace WardStatsTracker.Api
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             else app.UseJsonResponseExceptionHandler();
 
-            app.UseCors("AllowClientHost");
+            app.UseCors("AllowGet");
 
             app.UseMvc();
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -36,7 +35,7 @@ namespace WardStatsTracker.Infrastructure
             {
                 return null;
             }
-            
+
             return _mapper.Map<SummonerModel>(summoner);
         }
 
@@ -46,7 +45,7 @@ namespace WardStatsTracker.Infrastructure
             var client = _clientFactory.CreateClient(platformId);
 
             parameters ??= new MatchesPagingParameters();
-            
+
             var (beginIndex, endIndex) = PagingParametersHelper.ConvertPageParametersToIndices(parameters);
 
             MatchList matchList;
@@ -86,6 +85,18 @@ namespace WardStatsTracker.Infrastructure
             var matchDetails = await client.GetMatch(matchId);
             var matchDetailsModel = _mapper.Map<MatchDetailsModel>(matchDetails);
             return matchDetailsModel.Participants.ToList();
+        }
+
+        public Task<MatchDetailsModel[]> GetMatchDetails(string platformId,
+            IEnumerable<MatchOverviewModel> matchOverviews)
+        {
+            var client = _clientFactory.CreateClient(platformId);
+            return Task.WhenAll(matchOverviews.Select(
+                async overview =>
+                {
+                    var matchDetails = await client.GetMatch(overview.GameId);
+                    return _mapper.Map<MatchDetailsModel>(matchDetails);
+                }));
         }
     }
 }

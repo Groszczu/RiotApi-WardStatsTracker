@@ -24,7 +24,8 @@ namespace WardStatsTracker.Api.Controllers
         [HttpGet("{summonerName}")]
         public async Task<ActionResult<SummonerModel>> GetSummonerByName(string platformId, string summonerName, 
             [FromQuery] bool includeMatches = true, 
-            [FromQuery] bool includeLeagues = true)
+            [FromQuery] bool includeLeagues = true,
+            [FromQuery] bool includeMatchDetails = false)
         {
             var summoner = await _riotService.GetSummoner(platformId, summonerName);
             if (summoner == null)
@@ -32,8 +33,16 @@ namespace WardStatsTracker.Api.Controllers
             
             if (includeMatches)
             {
-                summoner.Matches = await _riotService.GetMatchesByAccount(platformId, summoner.AccountId!) 
-                    ?? new List<MatchOverviewModel>();
+                var matchOverviews = await _riotService.GetMatchesByAccount(platformId, summoner.AccountId!) 
+                                                          ?? new List<MatchOverviewModel>();
+                if (includeMatchDetails)
+                {
+                    summoner.MatchesWithDetails = await _riotService.GetMatchDetails(platformId, matchOverviews);
+                }
+                else
+                {
+                    summoner.Matches = matchOverviews;
+                }
             }
 
             if (includeLeagues)
