@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import CommunityDragon from '../../../util/CommunityDragon';
+import CommunityDragon from '../../../../util/CommunityDragon';
 import RuneDetails from './RuneDetails';
-import { useIsMountedRef } from '../../../hooks/hooks';
+import { useIsMountedRef } from '../../../../hooks/hooks';
 
 const Runes = ({ keystoneId, perkSubStyleId }) => {
   const [keystoneRune, setKeystoneRune] = useState({ data: {}, imgUrl: '' });

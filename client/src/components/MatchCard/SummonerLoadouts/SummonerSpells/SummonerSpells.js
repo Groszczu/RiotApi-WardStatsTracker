@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import DataDragon from '../../../util/DataDragon';
+import DataDragon from '../../../../util/DataDragon';
 import SummonerSpell from './SummonerSpell';
-import {useIsMountedRef} from '../../../hooks/hooks';
+import {useIsMountedRef} from '../../../../hooks/hooks';
 
 const SummonerSpells = ({spellIds}) => {
   const [spells, setSpells] = useState([]);

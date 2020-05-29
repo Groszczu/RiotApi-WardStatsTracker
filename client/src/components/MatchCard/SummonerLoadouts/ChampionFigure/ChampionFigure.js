@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import DataDragon from '../../../util/DataDragon';
+import DataDragon from '../../../../util/DataDragon';
 import ChampionCaption from './ChampionCaption';
 import ChampionIcon from './ChampionIcon';
-import { useIsMountedRef } from '../../../hooks/hooks';
+import { useIsMountedRef } from '../../../../hooks/hooks';
 
 const ChampionFigure = ({ championId }) => {
   const [championName, setChampionName] = useState('');

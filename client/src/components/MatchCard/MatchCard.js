@@ -1,7 +1,7 @@
 import React from 'react';
 import QueueTypeResolver from './QueueTypeResolver';
 import './MatchCard.css';
-import SummonerLoadouts from '../SummonerLoadouts/SummonerLoadouts';
+import SummonerLoadouts from './SummonerLoadouts/SummonerLoadouts';
 import GameStats from './GameStats/GameStats';
 import MatchDetails from "./MatchDetails/MatchDetails";
 

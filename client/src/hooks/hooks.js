@@ -1,4 +1,4 @@
-import {useEffect, useReducer, useRef, useState} from 'react';
+import {useEffect, useReducer, useRef} from 'react';
 
 export const useIsMountedRef = () => {
   const isMountedRef = useRef(null);
@@ -37,8 +37,18 @@ const dataFetchReducer = (state, action) => {
   }
 };
 
+const fetchDataReducer = (state, action) => {
+  return {
+    url: action,
+    timestamp: Date.now()
+  }
+};
+
 export const useDataApi = (initialUrl, initialData = null) => {
-  const [url, setUrl] = useState(initialUrl);
+  const [fetchData, changeUrl] = useReducer(fetchDataReducer, {
+    url: initialUrl,
+    timestamp: Date.now(),
+  });
 
   const [state, dispatch] = useReducer(dataFetchReducer, {
     isLoading: true,
@@ -50,7 +60,7 @@ export const useDataApi = (initialUrl, initialData = null) => {
     let cancelled = false;
 
     dispatch({type: 'FETCH_INIT'});
-    fetch(url)
+    fetch(fetchData.url)
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch data');
@@ -71,7 +81,7 @@ export const useDataApi = (initialUrl, initialData = null) => {
     return () => {
       cancelled = true;
     }
-  }, [url]);
+  }, [fetchData.url, fetchData.timestamp]);
 
-  return [state, setUrl];
+  return [state, changeUrl];
 };

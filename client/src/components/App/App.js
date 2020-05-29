@@ -13,7 +13,8 @@ const App = () => {
         <main className="content container">
           <Switch>
             <Route exact path="/" component={Home}/>
-            <Route exact path="/:platform/account/:summonerName" component={AccountDetails}/>
+            <Route exact path="/:platform/account/:summonerName"
+                   component={(props) => <AccountDetails timestamp={Date.now()} {...props} />}/>
           </Switch>
         </main>
       </div>

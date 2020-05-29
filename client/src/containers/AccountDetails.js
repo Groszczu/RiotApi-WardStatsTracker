@@ -4,7 +4,7 @@ import Config from "../configuration";
 import SummonerPage from "../components/SummonerPage";
 import LoadingSpinner from "../components/LoadingSinner/LoadingSpinner";
 
-const AccountDetails = ({match: pathMatch}) => {
+const AccountDetails = ({match: pathMatch, timestamp}) => {
   const platformId = pathMatch.params.platform;
   const summonerName = pathMatch.params.summonerName;
   const endpoint = `${Config.apiGateway.url}/${platformId}/summoners/${summonerName}?includeMatchDetails=true`;
@@ -13,7 +13,7 @@ const AccountDetails = ({match: pathMatch}) => {
 
   useEffect(() => {
     doFetch(endpoint);
-  }, [doFetch, endpoint])
+  }, [doFetch, endpoint, timestamp])
 
 
   const { data: summonerData, isLoading, isError } = summonerFetchState;
@@ -25,7 +25,5 @@ const AccountDetails = ({match: pathMatch}) => {
     loader={() => <LoadingSpinner />}
     summonerData={summonerData} />;
 };
-
-
 
 export default AccountDetails;
