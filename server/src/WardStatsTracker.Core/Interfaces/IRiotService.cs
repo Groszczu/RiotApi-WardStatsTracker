@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WardStatsTracker.Core.Helpers;
 using WardStatsTracker.Core.Models;

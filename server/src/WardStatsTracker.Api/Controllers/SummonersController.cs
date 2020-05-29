@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Refit;
 using WardStatsTracker.Core.Interfaces;
 using WardStatsTracker.Core.Models;
-using WardStatsTracker.Core.Parameters;
 
 namespace WardStatsTracker.Api.Controllers
 {
