@@ -1,12 +1,13 @@
 import React from 'react';
+import './MatchDetails.css';
 
-const MatchInfoDetails = ({ queueType, match, isWin }) => {
+const MatchDetails = ({ queueType, gameCreation, gameDuration, isWin }) => {
   return (
     <>
       <em>{queueType}</em>
-      <p>{getMatchDate(match.gameCreation)}</p>
+      <p>{getMatchDate(gameCreation)}</p>
       {isWin ? <p className="victory-tag">Victory</p> : <p className="defeat-tag">Defeat</p>}
-      <p>{calculateMatchDuration(match.gameDuration)}</p>
+      <p>{calculateMatchDuration(gameDuration)}</p>
     </>
   );
 };
@@ -49,4 +50,4 @@ function calculateMatchDuration(durationInSeconds) {
   return `${minutes}m ${secondsLeft}s`;
 }
 
-export default MatchInfoDetails;
+export default MatchDetails;

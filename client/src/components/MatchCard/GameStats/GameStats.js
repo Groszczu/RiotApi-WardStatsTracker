@@ -1,8 +1,7 @@
 import React from 'react';
 import './GameStats.css';
 
-const GameStats = ({stats}) => {
-  const { kills, deaths, assists } = stats;
+const GameStats = ({kills, deaths, assists}) => {
   const kda = calculateKda(kills, deaths, assists);
 
   return (

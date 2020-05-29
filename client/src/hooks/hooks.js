@@ -17,14 +17,12 @@ const dataFetchReducer = (state, action) => {
       return {
         ...state,
         isLoading: true,
-        fetched: false,
         isError: false,
       };
     case 'FETCH_SUCCESS':
       return {
         ...state,
         isLoading: false,
-        fetched: true,
         isError: false,
         data: action.payload,
       };
@@ -32,7 +30,6 @@ const dataFetchReducer = (state, action) => {
       return {
         ...state,
         isLoading: false,
-        fetched: false,
         isError: true,
       };
     default:
@@ -44,8 +41,7 @@ export const useDataApi = (initialUrl, initialData = null) => {
   const [url, setUrl] = useState(initialUrl);
 
   const [state, dispatch] = useReducer(dataFetchReducer, {
-    isLoading: false,
-    fetched: false,
+    isLoading: true,
     isError: false,
     data: initialData,
   });
